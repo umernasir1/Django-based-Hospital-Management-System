@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Appointment List</h2>
+        <a href="{% url 'appointment-create' %}" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i>Add New Appointment
+        </a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for appointment in appointments %}
+                        <tr>
+                            <td>{{ appointment.id }}</td>
+                            <td>{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</td>
+                            <td>{{ appointment.doctor }}</td>
+                            <td>{{ appointment.date|date:"Y-m-d" }}</td>
+                            <td>{{ appointment.time }}</td>
+                            <td>{{ appointment.get_status_display }}</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a href="{% url 'appointment-detail' appointment.id %}" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{% url 'appointment-update' appointment.id %}" class="btn btn-sm btn-outline-secondary">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="{% url 'appointment-delete' appointment.id %}" class="btn btn-sm btn-outline-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-center py-4">
+                                <div class="alert alert-info">No appointments found</div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

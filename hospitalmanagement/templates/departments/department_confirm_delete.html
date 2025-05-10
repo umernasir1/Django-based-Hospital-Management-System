@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="confirmation-dialog">
+    <h2>Confirm Department Deletion</h2>
+    <p>Are you sure you want to permanently delete the department <strong>"{{ department.name }}"</strong>?</p>
+    <p class="text-muted">Department ID: {{ department.id }}</p>
+
+    <form method="POST" action="{% url 'departments-delete' department.pk %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <a href="{% url 'departments-list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+<style>
+    .confirmation-dialog {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        background-color: white;
+    }
+    .confirmation-dialog h2 {
+        color: #dc3545;
+        margin-bottom: 1.5rem;
+    }
+    .confirmation-dialog p {
+        margin-bottom: 1.5rem;
+    }
+    .btn {
+        margin-right: 10px;
+    }
+</style>
+{% endblock %}

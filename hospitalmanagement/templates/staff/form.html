@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>{% if object %}Edit{% else %}Create{% endif %} Staff Member</h2>
+    
+    <form method="post" enctype="multipart/form-data" class="mt-4">
+        {% csrf_token %}
+        
+        <!-- Error Messages -->
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            <strong>Error!</strong> Please correct the following errors:
+            <ul>
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <li>{{ field|title }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <!-- User Fields -->
+        <div class="card mb-4">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">User Information</h5>
+            </div>
+            <div class="card-body">
+                {% for field in form %}
+                    {% if 'user-' in field.name %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label">
+                            {{ field.label }}{% if field.field.required %}*{% endif %}
+                        </label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Staff Fields -->
+        <div class="card mb-4">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Staff Details</h5>
+            </div>
+            <div class="card-body">
+                <!-- Add this name field -->
+                <div class="mb-3">
+                    <label for="id_name" class="form-label">Additional Name Info</label>
+                    <input type="text" name="name" id="id_name" class="form-control"
+                           value="{{ form.name.value|default:'' }}"
+                           placeholder="Additional name information">
+                </div>
+                
+                {% for field in form %}
+                    {% if 'user-' not in field.name and field.name != 'name' %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label">
+                            {{ field.label }}{% if field.field.required %}*{% endif %}
+                        </label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{% url 'staff-list' %}" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary">Save Staff</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

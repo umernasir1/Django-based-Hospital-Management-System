@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="confirmation-dialog">
+    <h2>Confirm Staff Deletion</h2>
+    <p>Are you sure you want to permanently delete the staff record for 
+        <strong>
+            {% if staff.user.get_full_name %}
+                {{ staff.user.get_full_name }}
+            {% else %}
+                {{ staff.name }}
+            {% endif %}
+        </strong>?
+    </p>
+    <p class="text-muted">Staff ID: {{ staff.id }} | Role: {{ staff.get_role_display }}</p>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Confirm Delete</button>
+        <a href="{% url 'staff-list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+<style>
+    .confirmation-dialog {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        background-color: white;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+    .confirmation-dialog h2 {
+        color: #dc3545;
+        margin-bottom: 1.5rem;
+    }
+    .confirmation-dialog p {
+        margin-bottom: 1.5rem;
+    }
+    .btn {
+        margin-right: 10px;
+        padding: 0.375rem 0.75rem;
+    }
+    .text-muted {
+        color: #6c757d;
+    }
+</style>
+{% endblock %}

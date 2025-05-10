@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+    <h2>Dashboard Overview</h2>
+    
+    <div class="row mt-4">
+        <!-- Departments Card -->
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-primary h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Departments</h5>
+                    <p class="card-text">{{ departments_count }} Departments</p>
+                    <a href="{% url 'departments-list' %}" class="text-white">View All</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Patients Card -->
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-success h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Patients</h5>
+                    <p class="card-text">{{ patients_count }} Patients</p>
+                    <a href="{% url 'patient-list' %}" class="text-white">View All</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Staff Card -->
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-info h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Staff</h5>
+                    <p class="card-text">{{ staff_count }} Staff Members</p>
+                    <a href="{% url 'staff-list' %}" class="text-white">View All</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appointments Card -->
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-warning h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Appointments</h5>
+                    <p class="card-text">{{ appointments_count }} Appointments</p>
+                    <a href="{% url 'appointment-list' %}" class="text-white">View All</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

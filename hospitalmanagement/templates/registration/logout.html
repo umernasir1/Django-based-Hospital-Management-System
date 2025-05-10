@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="logout-message">
+    <h2>Logged Out Successfully</h2>
+    <p>Thank you for using our system.</p>
+    
+    {% if user.is_authenticated %}
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+     {% endif %}
+    
+    <div class="logout-actions">
+        <a href="{% url 'login' %}" class="btn btn-primary">Log In Again</a>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Return Home</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="my-4">Department Details</h2>
+    
+    <div class="card">
+        <div class="card-body">
+            <p><strong>Name:</strong> {{ department.name }}</p>
+            <p><strong>Head:</strong> {{ department.head }}</p>
+            <p><strong>Description:</strong> {{ department.description }}</p>
+            
+            {% if department.staff_set.all %}
+            <hr>
+            <h5>Staff Members</h5>
+            <ul class="list-group">
+                {% for staff in department.staff_set.all %}
+                <li class="list-group-item">
+                    {{ staff.get_full_name }} - {{ staff.position }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <a href="{% url 'departments-update' department.id %}" class="btn btn-warning">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <a href="{% url 'departments-delete' department.id %}" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Delete
+                    </a>
+                </div>
+                <a href="{% url 'departments-list' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    }
+    .card-body p {
+        margin-bottom: 1rem;
+    }
+    .card-footer {
+        background-color: rgba(0, 0, 0, 0.03);
+    }
+</style>
+{% endblock %}

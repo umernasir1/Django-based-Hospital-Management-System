@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System</title>
+    <!-- Preload main assets -->
+    <link rel="preload" href="{% static 'static/js/main.js' %}" as="script">
+    <link rel="preload" href="{% static 'static/css/main.css' %}" as="style">
+    <!-- Load CSS -->
+    <link href="{% static 'static/css/main.css' %}" rel="stylesheet">
+</head>
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    
+    <!-- Loading fallback -->
+    <div id="loading-fallback" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: white;
+        z-index: 9999;
+    ">
+        <div style="text-align: center;">
+            <h2>Loading Hospital Management System...</h2>
+            <p>If this takes too long, please refresh the page.</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Hide loading fallback when app mounts
+        window.addEventListener('DOMContentLoaded', function() {
+            var loadingFallback = document.getElementById('loading-fallback');
+            var rootElement = document.getElementById('root');
+            
+            // If React hasn't mounted after 5 seconds, show error
+            setTimeout(function() {
+                if (rootElement.children.length === 0) {
+                    loadingFallback.innerHTML = `
+                        <div style="text-align: center; color: red;">
+                            <h2>Application Failed to Load</h2>
+                            <p>Please check your console for errors.</p>
+                            <button onclick="window.location.reload()">Refresh</button>
+                        </div>
+                    `;
+                }
+            }, 5000);
+        });
+    </script>
+    
+    <!-- Production React Files -->
+    <script src="{% static 'static/js/main.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Staff Details</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Basic Information</h5>
+                    <p><strong>Name:</strong> 
+                        {% if staff.user.get_full_name %}
+                            {{ staff.user.get_full_name }}
+                        {% else %}
+                            {{ staff.name }}
+                        {% endif %}
+                    </p>
+                    <p><strong>Role:</strong> {{ staff.get_role_display }}</p>
+                    <p><strong>Department:</strong> {{ staff.department.name|default:"-" }}</p>
+                    <p><strong>Specialization:</strong> {{ staff.specialization|default:"-" }}</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Contact Information</h5>
+                    <p><strong>Phone:</strong> {{ staff.phone|default:"-" }}</p>
+                    <p><strong>Email:</strong> {{ staff.user.email|default:"-" }}</p>
+                    <p><strong>Address:</strong> {{ staff.address|default:"-" }}</p>
+                    <p><strong>Hire Date:</strong> {{ staff.hire_date|date:"Y-m-d"|default:"-" }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-end">
+            <a href="{% url 'staff-list' %}" class="btn btn-secondary">Back to List</a>
+            <a href="{% url 'staff-update' staff.id %}" class="btn btn-primary">Edit</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
